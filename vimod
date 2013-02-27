@@ -4,7 +4,24 @@ action=$1
 dotvimPath=~/git/dotvim
 
 sausage() {
-  echo $(basename $0) enzo
+  cat << _EOD
+$(basename $0) <command> [<args>]
+
+  commands:
+
+    add <git url>
+      Add a plugin from git
+
+    ls
+      List all installed plugins
+
+    upgrade [all] | <plugin name>
+      Upgrade all plugins or upgrade single plugin
+
+    rm <plugin name>
+      Remove a plugin
+
+_EOD
   exit 1
 }
 
