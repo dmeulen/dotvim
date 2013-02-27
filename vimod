@@ -1,12 +1,11 @@
-#!/bin/bash -x
+#!/bin/bash
 
 action=$1
 dotvimPath=~/git/dotvim
 
-$DBG=echo
-
 sausage() {
-  :
+  echo $(basename $0) enzo
+  exit 1
 }
 
 ls_submodule() {
@@ -30,7 +29,7 @@ add_submodule() {
 
 rm_submodule() {
   local module=$1
-  if ls vim/bundle/${module} > /dev/null 2>&1; then
+  if test -d ./vim/bundle/${module}; then
     local submodulePath=vim/bundle/${module}
     $DBG git config -f .git/config --remove-section submodule.${submodulePath}
     $DBG git config -f .gitmodules --remove-section submodule.${submodulePath}
@@ -45,6 +44,20 @@ rm_submodule() {
 
 upgrade_submodule() {
   local module=$1
+  local submodulePath=vim/bundle/${module}
+  if [[ ${module} == 'all' ]]; then
+    upgrade_all_submodules
+  fi
+  if ! test -d ./${submodulePath}; then
+    echo "${module} module is not installed..."
+    exit 1
+  fi
+  $DBG cd ${submodulePath}
+  $DBG git pull origin master
+}
+
+upgrade_all_submodules() {
+  $DBG git submodule foreach git pull origin master
 }
 
 trap_cleanup() {
@@ -55,17 +68,20 @@ curdir=${PWD}
 cd ${dotvimPath}
 trap trap_cleanup SIGINT SIGQUIT SIGTERM
 
-case $action in 
+case $action in
   (ls|list)
     ls_submodule
     ;;
   (add|install)
+    [[ $2 ]] || sausage
     add_submodule $2
     ;;
   (rm|remove|delete)
+    [[ $2 ]] || sausage
     rm_submodule $2
     ;;
   (up|upgrade)
+    [[ $2 ]] || sausage
     upgrade_submodule $2
     ;;
   (*)
