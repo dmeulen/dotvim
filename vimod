@@ -39,7 +39,7 @@ add_submodule() {
   fi
 
   $DBG git submodule add -f ${gitUrl} vim/bundle/${gitName%.git}
-  $DBG git add .
+  $DBG git add vim/bundle/${gitName%.git}
   $DBG git commit -m "installed ${gitName%.git} module"
 
 }
@@ -53,7 +53,6 @@ rm_submodule() {
     $DBG git rm --cached ${submodulePath}
     $DBG rm -rf ./${submodulePath} > /dev/null 2>&1
     $DBG rm -rf .git/modules/${submodulePath} > /dev/null 2>&1
-    $DBG git add .
     $DBG git commit -m "removed ${module}"
   else
     echo "No such module is installed..."
