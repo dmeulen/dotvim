@@ -1,16 +1,23 @@
 dotvim
 ======
 
-My vim stuff
+Use vimod to manage vim plugins ( https://github.com/tpope/vim-pathogen.git is required ).
 
-add module
-----------
-git submodule add -f git://github.com/rodjek/vim-puppet.git vim/bundle/puppet
-git add .
-git commit -m 'install puppet vim as submodule'
+Usage:
 
-update module
--------------
-cd vim/bundle/puppet
-git pull origin master
+vimod <command> [<args>]
+
+  commands:
+
+    add <git url>
+      Add a plugin from git
+
+    ls
+      List all installed plugins
+
+    upgrade [all] | <plugin name>
+      Upgrade all plugins or upgrade single plugin
+
+    rm <plugin name>
+      Remove a plugin
 
