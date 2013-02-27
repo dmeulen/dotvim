@@ -1,0 +1,74 @@
+#!/bin/bash -x
+
+action=$1
+dotvimPath=~/git/dotvim
+
+$DBG='echo'
+
+sausage() {
+  :
+}
+
+ls_submodule() {
+  ls -1 vim/bundle
+}
+
+add_submodule() {
+  local gitUrl=$1
+  local gitName=${gitUrl##*/}
+
+  if ! echo ${gitName} | grep -q '\.git$' ; then
+    echo "${gitUrl} does not seem valid to me, bailing out.."
+    exit 1
+  fi
+
+  $DBG git submodule add -f ${gitUrl} vim/bundle/${gitName%.git}
+  $DBG git add .
+  $DBG git commit -m "installed ${gitName%.git} module"
+
+}
+
+rm_submodule() {
+  local module=$1
+  if ls vim/bundle/${module} > /dev/null 2>&1; then
+    local submodulePath=vim/bundle/${module}
+    $DBG git config -f .git/config --remove-section submodule.${submodulePath}
+    $DBG git config -f .gitmodules --remove-section submodule.${submodulePath}
+    $DBG git rm --cached ${submodulePath}
+    $DBG rm -rf ./${submodulePath}
+    $DBG rm -rf .git/modules/${submodulePath}
+  else
+    echo "No such module is installed..."
+    exit 1
+  fi
+}
+
+upgrade_submodule() {
+  local module=$1
+}
+
+trap_cleanup() {
+  cd ${curdir}
+}
+
+curdir=${PWD}
+cd ${dotvimPath}
+trap trap_cleanup SIGINT SIGQUIT SIGTERM
+
+case $action in 
+  (ls|list)
+    ls_submodule
+    ;;
+  (add|install)
+    add_submodule $2
+    ;;
+  (rm|remove|delete)
+    rm_submodule $2
+    ;;
+  (up|upgrade)
+    upgrade_submodule $2
+    ;;
+  (*)
+    sausage
+    ;;
+esac
