@@ -34,7 +34,7 @@ add_submodule() {
   local gitName=${gitUrl##*/}
 
   if ! echo ${gitName} | grep -q '\.git$' ; then
-    echo "${gitUrl} does not seem valid to me, bailing out.."
+    echo "\"${gitUrl}\" is not a valid git url..."
     exit 1
   fi
 
@@ -51,8 +51,10 @@ rm_submodule() {
     $DBG git config -f .git/config --remove-section submodule.${submodulePath}
     $DBG git config -f .gitmodules --remove-section submodule.${submodulePath}
     $DBG git rm --cached ${submodulePath}
-    $DBG rm -rf ./${submodulePath}
-    $DBG rm -rf .git/modules/${submodulePath}
+    $DBG rm -rf ./${submodulePath} > /dev/null 2>&1
+    $DBG rm -rf .git/modules/${submodulePath} > /dev/null 2>&1
+    $DBG git add .
+    $DBG git commit -m "removed ${module}"
   else
     echo "No such module is installed..."
     exit 1
