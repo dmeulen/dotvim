@@ -3,7 +3,7 @@
 action=$1
 dotvimPath=~/git/dotvim
 
-$DBG='echo'
+$DBG=echo
 
 sausage() {
   :
