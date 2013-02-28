@@ -13,6 +13,10 @@ Create symlinks to vim configs in yout homedirectory
     ln -s ~/git/dotvim/vim ~/.vim
     ln -s ~/git/dotvim/vimod ~/bin/vimod
 
+Fetch all preconfigured plugins
+
+    vimod init
+
 Done!
 
 Usage:
