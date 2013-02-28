@@ -1,7 +1,7 @@
 dotvim
 ======
 
-Use vimod to manage vim plugins ( https://github.com/tpope/vim-pathogen.git is required ).
+Use vimod to manage vim plugins.
 
 Installation
 
