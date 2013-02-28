@@ -12,6 +12,10 @@ $(basename $0) <command> [<args>]
     add <git url>
       Add a plugin from git
 
+    init
+      Initialize plugins
+      Usually used after first clone
+
     ls
       List all installed plugins
 
@@ -78,6 +82,10 @@ upgrade_all_submodules() {
   $DBG git submodule foreach git pull origin master
 }
 
+init_submodules() {
+  $DBG git submodule update --init
+}
+
 trap_cleanup() {
   cd ${curdir}
 }
@@ -101,6 +109,9 @@ case $action in
   (up|upgrade)
     [[ $2 ]] || sausage
     upgrade_submodule $2
+    ;;
+  (init)
+    init_submodules
     ;;
   (*)
     sausage
