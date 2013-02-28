@@ -12,7 +12,8 @@ syntax on
 colorscheme evening
 
 " ==== Status Line ====
-set statusline=%{fugitive#statusline()}\ %<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
+set laststatus=2
+set statusline=%<\ %n:%f\ %m%r%y%=%-35.(line:\ %l\ of\ %L,\ col:\ %c%V\ (%P)%)
 
 " ==== Folding ====
 set foldmethod=indent
@@ -33,6 +34,3 @@ filetype indent on
 
 " Dotted spaces, tabs and trailing spaces
 set list listchars=tab:\ \ ,trail:ꔷ
-
-" Give a shortcut key to NERD Tree
-map <F2> :NERDTreeToggle<CR>
