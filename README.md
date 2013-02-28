@@ -35,7 +35,7 @@ Usage:
         ls
           List all installed plugins
 
-        upgrade [all] | <plugin name>
+        upgrade all | <plugin name>
           Upgrade all plugins or upgrade single plugin
 
         rm <plugin name>
