@@ -1,7 +1,6 @@
 #!/bin/bash
 
 action=$1
-dotvimPath=~/git/dotvim
 
 sausage() {
   cat << _EOD
@@ -13,7 +12,7 @@ $(basename $0) <command> [<args>]
       Add a plugin from git
 
     init
-      Initialize plugins
+      Initialize plugins and install vim settings
       Usually used after first clone
 
     ls
@@ -27,6 +26,15 @@ $(basename $0) <command> [<args>]
 
 _EOD
   exit 1
+}
+
+set_dotvim_path() {
+  if [[ -L ${1} ]]; then
+    dotvimScriptPath=$(readlink ${1})
+  else
+    dotvimScriptPath=${1}
+  fi
+  dotvimPath=${dotvimScriptPath%/*}
 }
 
 ls_submodule() {
@@ -82,7 +90,16 @@ upgrade_all_submodules() {
   $DBG git submodule foreach git pull origin master
 }
 
-init_submodules() {
+init() {
+  if [[ -x ~/.vimrc ]]; then
+    mv ~/.vimrc ~/.vimrc_backup
+  fi
+  if [[ -x ~/.vim ]]; then
+    mv ~/.vim ~/.vim_backup
+  fi
+  ln -s ${PWD}/vimrc ~/.vimrc
+  ln -s ${PWD}/vim ~/.vim
+  [[ -d ~/bin/ ]] && ln -sf ${PWD}/vimod ~/bin/vimod
   $DBG git submodule update --init
 }
 
@@ -90,6 +107,7 @@ trap_cleanup() {
   cd ${curdir}
 }
 
+set_dotvim_path ${0}
 curdir=${PWD}
 cd ${dotvimPath}
 trap trap_cleanup SIGINT SIGQUIT SIGTERM
@@ -111,7 +129,7 @@ case $action in
     upgrade_submodule $2
     ;;
   (init)
-    init_submodules
+    init
     ;;
   (*)
     sausage
