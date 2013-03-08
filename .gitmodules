@@ -22,6 +22,3 @@
 [submodule "vim/bundle/tabular"]
 	path = vim/bundle/tabular
 	url = https://github.com/godlygeek/tabular.git
-[submodule "vim/bundle/Align"]
-	path = vim/bundle/Align
-	url = https://github.com/vim-scripts/Align.git
