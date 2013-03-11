@@ -7,13 +7,7 @@ Installation
 
     git clone https://github.com/dmeulen/dotvim.git
 
-Create symlinks to vim configs in yout homedirectory
-
-    ln -s ~/git/dotvim/vimrc ~/.vimrc
-    ln -s ~/git/dotvim/vim ~/.vim
-    ln -s ~/git/dotvim/vimod ~/bin/vimod
-
-Fetch all preconfigured plugins
+Fetch all preconfigured plugins and install vim config
 
     vimod init
 
