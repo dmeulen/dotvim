@@ -51,6 +51,8 @@ add_submodule() {
   fi
 
   $DBG git submodule add -f ${gitUrl} vim/bundle/${gitName%.git}
+  $DBG git add vim/bundle/${gitName%.git}
+  $DBG git commit -m "installed ${gitName%.git} module"
 
 }
 
