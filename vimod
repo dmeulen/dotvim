@@ -77,6 +77,7 @@ upgrade_submodule() {
   local submodulePath=vim/bundle/${module}
   if [[ ${module} == 'all' ]]; then
     upgrade_all_submodules
+    return
   fi
   if ! test -d ./${submodulePath}; then
     echo "${module} module is not installed..."
