@@ -9,7 +9,7 @@ filetype plugin indent on
 " ==== General Stuff ====
 set visualbell
 syntax on
-colorscheme evening
+colorscheme delek
 
 " ==== Status Line ====
 set laststatus=2
@@ -33,4 +33,4 @@ filetype plugin on
 filetype indent on
 
 " Dotted spaces, tabs and trailing spaces
-set list listchars=tab:\ \ ,trail:ꔷ
+set list listchars=tab:\ \ ,trail:.
