@@ -7,7 +7,7 @@ call pathogen#helptags() " generate helptags for everything in 'runtimepath'
 filetype plugin indent on
 
 " ==== General Stuff ====
-set visualbell
+set novisualbell
 syntax on
 colorscheme delek
 
@@ -28,6 +28,8 @@ set expandtab
 set tabstop=2
 set softtabstop=2
 set shiftwidth=2
+
+set relativenumber
 
 filetype plugin on
 filetype indent on
